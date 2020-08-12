@@ -4,7 +4,7 @@ module FsGuy
   class Engine
     attr_reader :path
 
-    def initialize(root)
+    def initialize(root = '.')
       @path = root
     end
 
@@ -12,7 +12,7 @@ module FsGuy
       folder = FolderContext.new(full_path(name))
       @path = folder.path
 
-      instance_eval(&block)
+      instance_eval(&block) if block_given?
     end
 
     def file(name)
