@@ -19,9 +19,11 @@ RSpec.describe FsGuy::Engine do
       let(:block) { proc {} }
 
       it 'evaluates block' do
-        expect_any_instance_of(described_class).to receive(:instance_eval).once
+        FakeFS.with_fresh do
+          expect_any_instance_of(described_class).to receive(:instance_eval).once
 
-        subject
+          subject
+        end
       end
     end
   end
