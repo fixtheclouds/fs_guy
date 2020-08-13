@@ -4,7 +4,7 @@ require 'fs_guy/engine'
 module FsGuy
   class Error < StandardError; end
 
-  def self.run(root, &block)
+  def self.run(root = '.', &block)
     raise 'No block given' unless block_given?
 
     engine = FsGuy::Engine.new(root)

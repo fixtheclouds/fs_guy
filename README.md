@@ -15,16 +15,17 @@ old         drwxr-xr-x user users
 ### Write some DSL script
 ```ruby
 FsGuy.run do
-  dir 'dir_1' do   # Create folder and enter
-   file 'file.txt' # Create blank file
+  dir 'dir_1' do                            # Create folder and enter
+   file 'file.txt'                          # Create blank file
   end
 
-  dir 'dir_2' do # Enter existing folder
-    file 'text.txt' > 'next.txt' # Rename file
-    file 'text.csv' && 'dup.csv'  # Copy file
-    rm 'trash' # Remove file
-    own 'dup.csv', 'someguy' # Change file owner
-    mod 'dup.csv', :all # Set file modificators
+  dir 'dir_2' do                            # Enter existing folder
+    move('text.txt').to 'next.txt'          # Move file
+    copy('text.csv').to 'dup.csv'           # Copy file
+    remove 'trash'                          # Remove file
+    own 'dup.csv', 'someguy'                # Change file owner
+    mode 'dup.csv', :all                    # Set file mode
+    file('next.txt').mode(:all).own(:other) # Chaining
   end
 
   rm 'old', force: true # Force remove directory
