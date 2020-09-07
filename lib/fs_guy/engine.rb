@@ -17,16 +17,24 @@ module FsGuy
       instance_eval(&block) if block_given?
     end
 
-    def file(name)
-      @context = FileContext.new(full_path(name))
+    def file(file_path)
+      @context = FileContext.new(full_path(file_path))
     end
 
-    def move(new_path)
-      @context = FileContext.new(full_path(new_path), :move)
+    def move(file_path)
+      @context = FileContext.new(full_path(file_path)).move
     end
 
-    def copy(new_path)
-      @context = FileContext.new(full_path(new_path), :copy)
+    def copy(file_path)
+      @context = FileContext.new(full_path(file_path)).copy
+    end
+
+    def own(file_path, owner)
+      @context = FileContext.new(full_path(file_path)).own(owner)
+    end
+
+    def mode(file_path, key)
+      @context = FileContext.new(full_path(file_path)).mode(key)
     end
 
     private

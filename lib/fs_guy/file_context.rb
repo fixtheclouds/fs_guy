@@ -4,10 +4,17 @@ module FsGuy
   class FileContext
     attr_accessor :path, :operation
 
-    def initialize(path, operation = nil)
+    def initialize(path)
       @path = path
-      @operation = operation
       create unless operation
+    end
+
+    def move
+      @operation = :move
+    end
+
+    def copy
+      @operation = :copy
     end
 
     def to(new_path)
@@ -23,6 +30,14 @@ module FsGuy
       end
 
       self
+    end
+
+    def mode(key)
+      FileUtils.chmod(key, path)
+    end
+
+    def own(user, group)
+      FileUtils.chown(user, group, path)
     end
 
     private

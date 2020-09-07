@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe FsGuy::Engine do
   describe '#dir' do
-    subject { described_class.new.dir(name) }
+    subject { described_class.new('.').dir(name) }
 
     let(:name) { 'test' }
 
@@ -14,7 +14,7 @@ RSpec.describe FsGuy::Engine do
     end
 
     context 'with block' do
-      subject { described_class.new.dir(name, &block) }
+      subject { described_class.new('.').dir(name, &block) }
 
       let(:block) { proc {} }
 

@@ -23,12 +23,12 @@ FsGuy.run do
     move('text.txt').to 'next.txt'          # Move file
     copy('text.csv').to 'dup.csv'           # Copy file
     remove 'trash'                          # Remove file
-    own 'dup.csv', 'someguy'                # Change file owner
+    own 'dup.csv', 'someguy', 'somegroup'   # Change file owner
     mode 'dup.csv', :all                    # Set file mode
     file('next.txt').mode(:all).own(:other) # Chaining
   end
 
-  rm 'old', force: true # Force remove directory
+  remove 'old', force: true # Force remove directory
 end
 ```
 
@@ -39,5 +39,5 @@ dir_1       drwxr-xr-x user    users
 dir_2       drwxr-xr-x user    users
 ---next.txt -rwxr--r-- user    users
 ---text.csv -rwxr--r-- user    users
----dup.csv  -rwxrwxrwx someguy users
+---dup.csv  -rwxrwxrwx someguy somegroup
 ```
