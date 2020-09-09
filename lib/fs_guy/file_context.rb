@@ -40,6 +40,11 @@ module FsGuy
       FileUtils.chown(user, group, path)
     end
 
+    def rm(new_path = nil, **kwargs)
+      force = kwargs.slice(:force) || false
+      FileUtils.rm(new_path || path, force: force)
+    end
+
     private
 
     def create
