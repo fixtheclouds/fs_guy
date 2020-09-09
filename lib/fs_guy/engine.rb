@@ -2,8 +2,12 @@ require 'fs_guy/folder_context'
 require 'fs_guy/file_context'
 
 module FsGuy
+  # Core class, responsible for dispatching method calls
+  # to corresponding contexts
   class Engine
     attr_reader :path, :context
+
+    FILE_METHODS = %i[move copy own mode].freeze
 
     def initialize(root)
       @path = root
@@ -18,26 +22,24 @@ module FsGuy
     end
 
     def file(file_path)
-      @context = FileContext.new(full_path(file_path))
+      @context = create_file_context(file_path)
     end
 
-    def move(file_path)
-      @context = FileContext.new(full_path(file_path)).move
+    # Use metaprogramming magic to call FileContext methods by default
+    def method_missing(method, *args)
+      @context = create_file_context(file_path).send(method, *args)
     end
 
-    def copy(file_path)
-      @context = FileContext.new(full_path(file_path)).copy
-    end
-
-    def own(file_path, owner)
-      @context = FileContext.new(full_path(file_path)).own(owner)
-    end
-
-    def mode(file_path, key)
-      @context = FileContext.new(full_path(file_path)).mode(key)
+    # Allow correct behaviour for #respond_to?
+    def respond_to_missing?(method_name)
+      FILE_METHODS.include?(method_name) || super
     end
 
     private
+
+    def create_file_context(file_path)
+      FileContext.new(full_path(file_path))
+    end
 
     def full_path(name)
       [path, name].join('/')
