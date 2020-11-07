@@ -5,7 +5,7 @@ module FsGuy
   class Error < StandardError; end
 
   def self.run(root = '.', &block)
-    raise 'No block given' unless block_given?
+    raise Error, 'No block given' unless block_given?
 
     engine = FsGuy::Engine.new(root)
     engine.instance_eval(&block)
