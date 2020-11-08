@@ -18,7 +18,7 @@ module FsGuy
     end
 
     def to(new_path)
-      raise FsGuy::Error, 'Target file must be provided' unless path
+      raise FsGuy::Error, 'Target file path must be specified' unless path
 
       case operation.to_sym
       when :move

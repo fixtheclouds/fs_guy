@@ -31,8 +31,8 @@ module FsGuy
 
     # Use metaprogramming magic to call FileContext methods by default
     def method_missing(method, *args)
-      validate_path(name)
-      @context = create_file_context(file_path).send(method, *args)
+      validate_path(args[0])
+      @context = create_file_context(args[0]).send(method, *args.drop(1))
     end
 
     # Allow correct behaviour for #respond_to?
@@ -51,6 +51,7 @@ module FsGuy
     end
 
     def validate_path(path)
+      raise Error, 'Target file path must be specified' if path.nil?
       raise Error, 'Cannot operate in parent directory' if path =~ INVALID_DIR_REGEX
     end
   end
