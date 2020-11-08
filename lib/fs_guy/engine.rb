@@ -5,30 +5,33 @@ module FsGuy
   # Core class, responsible for dispatching method calls
   # to corresponding contexts
   class Engine
-    attr_reader :path, :context
+    attr_reader :root, :context
 
     FILE_METHODS = %i[move copy own mode].freeze
-    DIR_REGEX = /..\//
+    INVALID_DIR_REGEX = /..\//
 
     def initialize(root)
-      raise Error, 'Cannot operate in parent directory' if root =~ DIR_REGEX
-      @path = root
+      raise Error, 'Cannot operate in parent directory' if root =~ INVALID_DIR_REGEX
+
+      @root = root
       @context = nil
     end
 
     def dir(name, &block)
+      validate_path(name)
       @context = FolderContext.new(full_path(name))
-      @path = context.path
 
       instance_eval(&block) if block_given?
     end
 
     def file(file_path)
+      validate_path(file_path)
       @context = create_file_context(file_path)
     end
 
     # Use metaprogramming magic to call FileContext methods by default
     def method_missing(method, *args)
+      validate_path(name)
       @context = create_file_context(file_path).send(method, *args)
     end
 
@@ -44,7 +47,11 @@ module FsGuy
     end
 
     def full_path(name)
-      [path, name].join('/')
+      [root, name].join('/')
+    end
+
+    def validate_path(path)
+      raise Error, 'Cannot operate in parent directory' if path =~ INVALID_DIR_REGEX
     end
   end
 end
