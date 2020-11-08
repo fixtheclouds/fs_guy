@@ -1,3 +1,4 @@
+require 'simplecov_helper'
 require 'bundler/setup'
 require 'fs_guy'
 require 'fakefs/safe'
