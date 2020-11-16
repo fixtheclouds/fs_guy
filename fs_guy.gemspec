@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.bindir = 'exe'
   spec.executables = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
-  spec.required_ruby_version = '>= 2.4.0'
+  spec.required_ruby_version = '>= 2.5.0'
 
   spec.add_development_dependency 'bundler', '~> 1.17'
   spec.add_development_dependency 'fakefs', '~> 1.2.2'
