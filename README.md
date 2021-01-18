@@ -41,7 +41,3 @@ dir_2       drwxr-xr-x user    users
 ---text.csv -rwxr--r-- user    users
 ---dup.csv  -rwxrwxrwx someguy somegroup
 ```
- ## TODO
-- Full specs coverage
-- CI & badge
-- Lock current directory (forbid traversing up)
