@@ -65,5 +65,13 @@ RSpec.describe FsGuy::Engine do
 
       subject
     end
+
+    context 'when no method' do
+      subject { described_class.new('.').shazam('file.txt') }
+
+      it do
+        expect { subject }.to raise_error(NoMethodError)
+      end
+    end
   end
 end
