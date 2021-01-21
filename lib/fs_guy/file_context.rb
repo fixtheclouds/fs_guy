@@ -20,7 +20,7 @@ module FsGuy
     def to(new_path)
       raise FsGuy::Error, 'Target file path must be specified' unless path
 
-      case operation.to_sym
+      case operation&.to_sym
       when :move
         FileUtils.mv(path, new_path)
       when :copy
