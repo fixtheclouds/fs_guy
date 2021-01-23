@@ -7,3 +7,4 @@ AllCops:
   TargetRubyVersion: 2.5
   Exclude:
     - 'bin/**/*'
+    - 'vendor/bundle/**/*'

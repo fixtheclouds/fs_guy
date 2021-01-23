@@ -29,7 +29,7 @@ RSpec.describe FsGuy::FileContext do
     end
   end
 
-  describe 'to' do
+  describe '#to' do
     subject { file_context.to(new_path) }
 
     let(:new_path) { 'new.txt' }
