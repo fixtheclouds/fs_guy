@@ -8,7 +8,7 @@ module FsGuy
     attr_reader :root, :context
 
     FILE_METHODS = %i[move copy own mode].freeze
-    INVALID_DIR_REGEX = /..\//
+    INVALID_DIR_REGEX = %r{..\/}.freeze
 
     def initialize(root)
       raise Error, 'Cannot operate in parent directory' if root =~ INVALID_DIR_REGEX
