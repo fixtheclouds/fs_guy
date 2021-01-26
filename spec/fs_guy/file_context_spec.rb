@@ -52,4 +52,18 @@ RSpec.describe FsGuy::FileContext do
       end
     end
   end
+
+  describe '#rm' do
+    subject { file_context.rm(file_path) }
+
+    let(:file_path) { 'obsolete.txt' }
+
+    it 'removes file' do
+      FakeFS.with_fresh do
+        FileUtils.touch(file_path)
+        subject
+        expect(File.file?(file_path)).to eq false
+      end
+    end
+  end
 end
